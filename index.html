@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="B1"> 
+       <h1 id="f" class="t">Регистрация</h1>
+    <h3 id="active_name"></h3>
+    <input type="text" id="name" class="t" placeholder="Логин">
+    <input type="password"  id="password" class="t1" placeholder="Пароль">
+    <input type="password"  id="password2" class="t2" placeholder="Повторите пароль">
+    <input type="button" value="Зарегестрироваться" onclick="regist()" class="t3">
+    <!-- <input type="button" onclick="rem()"> -->
+    <p id="er" class="t4"></p>
+    <a href="12.html" class="t5">У меня уже есть аккаунт</a>
+</div>
+
+    <!-- <h1 id="q">Войти</h1>
+    <input type="text" id="name1">
+    <input type="password"  id="password1">
+    <input type="button" value="Вход" onclick="wel()">
+
+    <h1>Сменить пароль</h1>
+    <input type="text" id="name3">
+    <input type="password" id="password3">
+    <input type="password" id="password4">
+    <input type="button" value="Смена" onclick="change()"> -->
+</body>
+
+<script>
+    function regist(){
+        let name = document.getElementById('name').value;
+        let password = document.getElementById('password').value;
+        let password2 = document.getElementById('password2').value;
+
+        if(localStorage.getItem(name)==null){
+            if (name.length >= 2){
+                if(password.length >= 8){
+                    if(password == password2){
+                        let new_user = {
+                            user_name: name,
+                            user_password: password
+                        }
+                        localStorage.setItem(new_user.user_name,JSON.stringify(new_user));
+                        localStorage.setItem("active_user",new_user.user_name)
+                        document.getElementById('active_name').textContent = localStorage['active_user']
+                        console.log("Новый пользователь добавлен ")
+                        document.location.href = "12.html";
+                        // document.getElementById('er').style.display = 'none'
+                        // document.getElementById('name').style.display = 'name'
+                        // document.getElementById('password').style.display = 'none'
+                        // document.getElementById('password2').style.display = 'none'
+                    }    
+                    else{
+                        document.getElementById('er').textContent = ' Пароли должны совпадать'
+                    }
+                }
+                else{
+                document.getElementById('er').textContent = ' Password должен быть не меньше 8 символов'
+            }  
+            }
+            else{
+                document.getElementById('er').textContent = ' Login должен быть не меньше 2 символов'
+            }
+        }
+
+        else{
+            console.log('Такой пользователь уже есть!')
+            document.getElementById('er').textContent = ' Такой пользователь уже есть!'
+        }
+
+
+
+    }
+    function rem(){
+        localStorage.removeItem('active_user')
+        document.getElementById("active_name").textContent = ' '
+    }
+
+    function wel(){
+        let name1 = document.getElementById('name1').value;
+        let password1 = document.getElementById('password1').value;
+   
+        if(localStorage.getItem(name1) != null){
+            let user_obj = localStorage.getItem(name1)
+            let user = JSON.parse(user_obj)
+            console.log('Такой пользоватeль есть')
+            console.log(user.user_password)
+
+            // let user_obj2 = localStorage.getItem(new_user.user_password)
+            // let user_pas = JSON.parse(user_obj2)
+
+            if(user.user_password == password1){    
+                document.location.href = "11.html";
+                localStorage.setItem("active_user",user.user_name)
+                document.getElementById('active_name').textContent = localStorage['active_user']
+            }
+            else{
+                document.getElementById('er').textContent = ' Не верный пароль'
+            }
+        }
+        else{
+            document.getElementById('er').textContent = ' Такой пользователь не существует'
+        }
+    }
+
+    // function change(){
+    //     let name3 = document.getElementById('name3').value;
+    //     let password3 = document.getElementById('password3').value;
+    //     let password4 = document.getElementById('password3').value;
+   
+    //     if(localStorage.getItem(name3) != null){
+    //         let user_obj1 = localStorage.getItem(name1)
+    //         let user = JSON.parse(user_obj1)
+    //         console.log('Такой пользоватeль есть')
+    //         console.log(user.user_password)
+            
+           
+    //         // let user_obj2 = localStorage.getItem(new_user.user_password)
+    //         // let user_pas = JSON.parse(user_obj2)
+
+    //         if(user.user_password == password3){    
+        
+    //             user.user_password = password4
+    //             console.log(user.user_password)
+    //             document.getElementById('er').textContent = 'Пароль изменён'
+    //         }
+    //         else{
+    //             document.getElementById('er').textContent = ' Не верный пароль'
+    //         }
+    //     }
+    //     else{
+    //         document.getElementById('er').textContent = ' Такой пользователь не существует'
+    //     }
+    // }
+</script>
+</html>
